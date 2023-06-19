@@ -77,9 +77,7 @@ def menu():
             phone_dir, key_count = create(phone_dir, key_count, user)
         elif num == "2":
             searching = input("Start of surname: ")
-            idc = read(phone_dir, searching)
-            user = phone_dir[idc]
-            print(f"{idc},{user[0]},{user[1]},{user[2]},{user[3]}")
+            read(phone_dir, searching)
         elif num == "3":
             searching = input("Start of surname: ")
             print("New data (leave empty to not update)\n" + "-" * 20)
@@ -129,10 +127,10 @@ def import_data(file_name: str) -> dict:
     return phone_dir
 
 
-def read(phone_dir: dict, searching: str) -> int:
+def read(phone_dir: dict, searching: str):
     for idc, user in phone_dir.items():
         if user[1].startswith(searching):
-            return idc
+            print(f"{idc},{user[0]},{user[1]},{user[2]},{user[3]}")
 
 
 def update(
@@ -168,4 +166,34 @@ def delete(phone_dir: dict, searching: str) -> dict:
     return phone_dir
 
 
+def menu_test():
+    key_count = 0
+    phone_dir = dict()
+    user = ["q", "w", "e", "r"]
+    phone_dir, key_count = create(phone_dir, key_count, user)
+    print("Created new user:")
+    print(phone_dir)
+
+
+    print("Read function:")
+    searching = "w"
+    read(phone_dir, searching)
+
+    searching = "w"
+    phone_dir = update(phone_dir, searching, "a", "s", None, "f")
+    print("Updated user:")
+    print(phone_dir)
+
+    export_phone_dir(phone_dir, "test")
+    print("Exported phone_dir to file")
+
+    delete(phone_dir, "s")
+    print("Deleted user:")
+    print(phone_dir)
+
+    phone_dir = import_data("test")
+    print("Imported phone_dir from file:")
+    print(phone_dir)
+
+# menu_test()
 menu()
